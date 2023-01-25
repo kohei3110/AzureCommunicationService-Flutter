@@ -1,4 +1,4 @@
-package main.java.com.example.users.model;
+package com.example.users.model;
 
 import java.util.List;
 
