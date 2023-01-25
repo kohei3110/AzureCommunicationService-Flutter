@@ -29,6 +29,11 @@
 			<artifactId>azure-cosmos</artifactId>
 			<version>${cosmos.version}</version>
 		</dependency>
+        <dependency>
+            <groupId>com.windowsazure</groupId>
+            <artifactId>Notification-Hubs-java-sdk</artifactId>
+            <version>1.0.3</version>  <!-- version を他のdependencyのように合わせて書くと、名前解決に失敗する -->
+        </dependency>
         <!-- Test -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
