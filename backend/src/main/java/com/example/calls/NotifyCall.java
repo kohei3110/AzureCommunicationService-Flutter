@@ -6,6 +6,7 @@ import com.windowsazure.messaging.FcmInstallation;
 import com.windowsazure.messaging.Notification;
 import com.windowsazure.messaging.NotificationHub;
 import com.windowsazure.messaging.NotificationHubsException;
+import com.example.calls.model.Event;
 import com.microsoft.azure.functions.*;
 
 /**
@@ -18,13 +19,13 @@ public class NotifyCall {
         private static final String NOTIFICATION_HUBS_PATH = System.getenv("NOTIFICATION_HUBS_PATH");
 
         @FunctionName("CallHandler")
-        public void callHandler(@EventGridTrigger(name = "topic-acs-demo-global-001") String message,
+        public void callHandler(@EventGridTrigger(name = "event") Event event,
                         final ExecutionContext context) throws Exception {
                 NotificationHub hub = new NotificationHub(NOTIFICATION_HUBS_CONNECTION_STRING,
                                 NOTIFICATION_HUBS_PATH);
                 // FIXME: DB からデバイストークンを取得する
                 FcmInstallation installation = new FcmInstallation(UUID.randomUUID().toString(),
-                                "cHqtZRBWRriUoqNdMiJVhu:APA91bGi-8rQpC2mT1stlvw__NVjmUnRgLffrhhEDZiENkIDWr0tQ_U3wXNHwGuowv5530tcpZI2dg8OaFMcVsfLOtAHzvNckVkFQ658B7Nw3d9M8hK5xWGHvKUqGF3uXRgDDs0ckHeC");
+                                "d8QKorUAQO-EeqdXBd3DeR:APA91bERbDQW4Lxr7w7DgcgnJf575O0lTH6AXV6D0nfvZEgH08JFlngfRNsaiSl8mNSFqr07FeI5hIgcIWNSqSZC3qXtOYt_83kVwlqGJIeSnKL3XQaFNJukFGYKrII1JAa72tK6nlO6");
                 String toast = System.getenv("TOAST");
                 String body = String.format(
                                 "{\"data\":{\"message\":\"%s\"}, \"notification\":{\"title\":\"Calling!!\", \"body\":\"電話です\", \"hashCode\":\"bodyhoge\"}, \"android\":{\"notification\":{\"hoge\":\"fuga\"}}}",
