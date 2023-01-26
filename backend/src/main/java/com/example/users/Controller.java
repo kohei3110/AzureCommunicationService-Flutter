@@ -4,6 +4,7 @@ import java.util.*;
 import com.microsoft.azure.functions.annotation.*;
 import com.example.users.model.User;
 import com.example.users.service.CreateUserService;
+import com.example.users.service.GetUserByUserIdService;
 import com.example.users.service.UpdateUserService;
 import com.microsoft.azure.functions.*;
 
@@ -38,7 +39,22 @@ public class Controller {
             return updateUserService.requestCosmosDBAsync(request.getBody());
         } catch (Exception e) {
             context.getLogger().warning(e.getMessage());
-            throw new Exception("create user operation has failed");
+            throw new Exception("update user operation has failed");
+        }
+    }
+
+    @FunctionName("GetUserByUserId")
+    public User getUserByUserId(
+            @HttpTrigger(name = "req", methods = {
+                    HttpMethod.GET }, authLevel = AuthorizationLevel.ANONYMOUS, route = "users/{id}") HttpRequestMessage<Optional<String>> request,
+            @BindingName("id") String id,
+            final ExecutionContext context) throws Exception {
+        GetUserByUserIdService getUserByUserIdService = factory.injectGetUserByUserIdService();
+        try {
+            return getUserByUserIdService.getUserByUserId(id);
+        } catch (Exception e) {
+            context.getLogger().warning(e.getMessage());
+            throw new Exception("get user by userid operation has failed");
         }
     }
 
