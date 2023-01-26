@@ -15,6 +15,7 @@
         <azure.functions.maven.plugin.version>1.22.0</azure.functions.maven.plugin.version>
         <azure.functions.java.library.version>2.2.0</azure.functions.java.library.version>
         <cosmos.version>4.39.0</cosmos.version>
+        <communication-identity.version>1.4.1</communication-identity.version>
         <functionAppName>backend-1674659469368</functionAppName>
     </properties>
 
@@ -33,6 +34,11 @@
             <groupId>com.windowsazure</groupId>
             <artifactId>Notification-Hubs-java-sdk</artifactId>
             <version>1.0.3</version>  <!-- version を他のdependencyのように合わせて書くと、名前解決に失敗する -->
+        </dependency>
+        <dependency>
+            <groupId>com.azure</groupId>
+            <artifactId>azure-communication-identity</artifactId>
+            <version>${communication-identity.version}</version>
         </dependency>
         <!-- Test -->
         <dependency>
