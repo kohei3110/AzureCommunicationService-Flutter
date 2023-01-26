@@ -77,39 +77,19 @@ void _firebaseMessagingForegroundHandler(
     RemoteMessage message,
     FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin,
     AndroidNotificationChannel channel) {
-  RemoteNotification? notification = message.notification;
-  AndroidNotification? android = message.notification?.android;
-  // If `onMessage` is triggered with a notification, construct our own
-  // local notification to show to users using the created channel.
-  if (notification != null && android != null) {
-    flutterLocalNotificationsPlugin.show(
-        notification.hashCode,
-        notification.title,
-        notification.body,
-        NotificationDetails(
-          android: AndroidNotificationDetails(
-            channel.id,
-            channel.name,
-            channelDescription: channel.description,
-            icon: android.smallIcon,
-            // other properties...
-          ),
-        ));
-  }
+  showCallkitIncoming(message.messageId!);
 }
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
   // make sure you call `initializeApp` before using other Firebase services.
-
-  print("Handling a background message: ${message.messageId}");
   showCallkitIncoming(message.messageId!);
 }
 
 Future<void> showCallkitIncoming(String uuid) async {
   final params = CallKitParams(
     id: uuid,
-    nameCaller: 'Hien Nguyen',
+    nameCaller: 'Kohei Saito',
     appName: 'Callkit',
     avatar: 'https://i.pravatar.cc/100',
     handle: '0123456789',
