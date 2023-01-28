@@ -16,6 +16,7 @@ dependencies:
   firebase_analytics: ^10.1.0
   flutter_callkit_incoming: ^1.0.3+3
   cupertino_icons: ^1.0.2
+  flutter_webrtc: ^0.9.11
 
 dev_dependencies:
   flutter_test:
