@@ -22,9 +22,10 @@ class HomePage extends RootPageWidget {
         body: Center(
           child: OutlinedButton(
             onPressed: () {
+              // FIXME: IDを固定しているので、実際には動的に変更する必要がある
               showCallkitIncoming("111");
             },
-            child: const Text("CallkitIncoming"),
+            child: const Text("通話を開始する"),
           ),
         ));
   }
