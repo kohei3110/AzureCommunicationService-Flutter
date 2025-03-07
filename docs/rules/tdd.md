@@ -2,7 +2,7 @@
 
 ## 1. TDDの基本サイクル
 
-Farm Conversation Analyzerプロジェクトでは、以下のTDDサイクルを採用します：
+Azure Communication Service (Flutter) プロジェクトでは、以下のTDDサイクルを採用します：
 
 ### Red-Green-Refactor サイクル
 
