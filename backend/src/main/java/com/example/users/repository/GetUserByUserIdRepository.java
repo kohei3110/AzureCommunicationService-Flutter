@@ -12,6 +12,10 @@ import com.example.users.model.User;
 
 import reactor.core.publisher.Mono;
 
+/**
+ * Repository class responsible for retrieving user data from Cosmos DB by user ID.
+ * This class provides an interface to interact with the User container in the Cosmos DB database.
+ */
 public class GetUserByUserIdRepository {
 
     private CosmosAsyncClient cosmosAsyncClient;
@@ -23,6 +27,10 @@ public class GetUserByUserIdRepository {
 
     Logger logger = Logger.getLogger(GetUserByUserIdRepository.class.getName());
 
+    /**
+     * Initializes the repository by setting up the Cosmos DB client and container.
+     * Connects to the database using endpoint and key values from environment variables.
+     */
     public GetUserByUserIdRepository() {
         this.cosmosAsyncClient = new CosmosClientBuilder()
                 .endpoint(System.getenv("COSMOSDB_ENDPOINT"))
@@ -34,6 +42,13 @@ public class GetUserByUserIdRepository {
                 .getContainer(CONTAINER_ID);
     }
 
+    /**
+     * Retrieves a user from the database by their user ID.
+     *
+     * @param userId The unique identifier of the user to retrieve
+     * @return The User object if found
+     * @throws Exception If the user cannot be found or if there's a database error
+     */
     public User getUserByUserId(String userId) throws Exception {
         try {
             Mono<CosmosItemResponse<User>> response = cosmosAsyncContainer.readItem(userId,

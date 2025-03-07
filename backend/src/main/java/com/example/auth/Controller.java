@@ -14,10 +14,24 @@ import com.microsoft.azure.functions.HttpMethod;
 import com.microsoft.azure.functions.HttpRequestMessage;
 import com.microsoft.azure.functions.annotation.*;
 
+/**
+ * Controller class for Azure Communication Services user management.
+ * Handles HTTP requests related to ACS user creation and token generation.
+ */
 public class Controller {
 
     Factory factory = new Factory();
 
+    /**
+     * Endpoint for generating ACS user IDs and tokens.
+     * This method authenticates the user, retrieves or creates an ACS user ID,
+     * and generates an ACS token for the authenticated user.
+     *
+     * @param request HTTP request message with optional payload
+     * @param context Function execution context
+     * @return Map containing the ACS user ID and token
+     * @throws Exception if authentication fails or token generation fails
+     */
     @FunctionName("GetACSUserIdToken")
     public Map<String, String> run(
             @HttpTrigger(name = "req", methods = { HttpMethod.GET,

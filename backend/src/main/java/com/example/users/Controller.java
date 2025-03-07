@@ -10,11 +10,21 @@ import com.microsoft.azure.functions.*;
 
 /**
  * Azure Functions with HTTP Trigger.
+ * Controller class that handles user-related operations through REST API endpoints.
+ * Provides functionality to create, update, and retrieve user information.
  */
 public class Controller {
 
     Factory factory = new Factory();
 
+    /**
+     * Creates a new user in the system.
+     *
+     * @param request HTTP request containing the user data in the request body
+     * @param context Execution context for the function
+     * @return The newly created User object
+     * @throws Exception If the create user operation fails
+     */
     @FunctionName("CreateUser")
     public User createUser(
             @HttpTrigger(name = "req", methods = {
@@ -29,6 +39,14 @@ public class Controller {
         }
     }
 
+    /**
+     * Updates an existing user's information.
+     *
+     * @param request HTTP request containing the updated user data in the request body
+     * @param context Execution context for the function
+     * @return The updated User object
+     * @throws Exception If the update user operation fails
+     */
     @FunctionName("UpdateUser")
     public User updateUser(
             @HttpTrigger(name = "req", methods = {
@@ -43,6 +61,15 @@ public class Controller {
         }
     }
 
+    /**
+     * Retrieves a user by their unique user ID.
+     *
+     * @param request HTTP request
+     * @param id The unique identifier of the user to retrieve
+     * @param context Execution context for the function
+     * @return The requested User object
+     * @throws Exception If the user retrieval operation fails
+     */
     @FunctionName("GetUserByUserId")
     public User getUserByUserId(
             @HttpTrigger(name = "req", methods = {

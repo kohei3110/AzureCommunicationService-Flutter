@@ -1,3 +1,4 @@
+import 'package:azurecommunicationserviceflutter/providers/firebase_messaging_provider.dart';
 import 'package:azurecommunicationserviceflutter/views/widgets/app_router.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -12,64 +13,26 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  String? token = await FirebaseMessaging.instance.getToken();
-  print('token: $token');
-  const AndroidNotificationChannel channel = AndroidNotificationChannel(
-    'high_importance_channel', // id
-    'High Importance Notifications', // title
-    description:
-        'This channel is used for important notifications.', // description
-    importance: Importance.max,
-  );
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
-  flutterLocalNotificationsPlugin.initialize(const InitializationSettings(
-      android: AndroidInitializationSettings('@mipmap/ic_launcher')));
-  await flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin>()
-      ?.createNotificationChannel(channel);
-
-  // フォアグラウンド時の通知ハンドラ
-  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    _firebaseMessagingForegroundHandler(
-        message, flutterLocalNotificationsPlugin, channel);
-  });
-
-  // バックグラウンド時の通知ハンドラ
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-
+  
+  final container = ProviderContainer();
+  final messagingService = container.read(firebaseMessagingProvider);
+  await messagingService.initialize();
+  
   runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends HookConsumerWidget {
   const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends HookConsumerWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
-        title: 'ACS Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.green,
-        ),
-        home: Router<dynamic>(routerDelegate: AppRouterDelegate(ref)));
+      title: 'ACS Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.green,
+      ),
+      home: Router<dynamic>(routerDelegate: AppRouterDelegate(ref))
+    );
   }
 }
 
