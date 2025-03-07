@@ -10,13 +10,22 @@ import com.azure.communication.identity.models.CommunicationTokenScope;
 import com.azure.core.credential.AzureKeyCredential;
 import com.microsoft.azure.functions.ExecutionContext;
 
+/**
+ * Service class that provides functionality for Azure Communication Services (ACS) user management.
+ * This class is responsible for creating ACS user identifiers and generating authentication tokens
+ * for these users. It utilizes the Azure Communication Identity Client to interact with Azure
+ * Communication Services.
+ * 
+ * The service requires ACS_ENDPOINT and ACS_ACCESSKEY environment variables to be set
+ * for authentication with Azure Communication Services.
+ */
 public class CreateAcsUserService {
 
     private static final String endpoint = System.getenv("ACS_ENDPOINT");
     private static final String credential = System.getenv("ACS_ACCESSKEY");
 
     /**
-     * ACS user Id を生成
+     * Generates an ACS user ID
      * 
      * @param context
      * @return
@@ -34,7 +43,7 @@ public class CreateAcsUserService {
     }
 
     /**
-     * ACS Token を生成
+     * Generates an ACS Token
      * 
      * @param userId
      * @param context

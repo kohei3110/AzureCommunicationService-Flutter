@@ -10,7 +10,7 @@ import com.example.calls.model.Event;
 import com.microsoft.azure.functions.*;
 
 /**
- * 通話を受けたときに通知を送信する
+ * Sends notifications when calls are received
  */
 public class NotifyCall {
 
