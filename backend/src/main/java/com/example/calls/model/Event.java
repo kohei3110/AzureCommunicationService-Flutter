@@ -30,5 +30,5 @@ public class Event {
     public String metadataVersion;
     
     /** The payload of the event containing event-specific information. */
-    public Map<String, Object> data;
+    public Map<String, String> data;
 }

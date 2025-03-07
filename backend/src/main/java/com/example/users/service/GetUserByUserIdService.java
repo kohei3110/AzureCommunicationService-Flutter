@@ -9,7 +9,7 @@ import com.example.users.repository.GetUserByUserIdRepository;
  */
 public class GetUserByUserIdService {
 
-    private GetUserByUserIdRepository repository;
+    private final GetUserByUserIdRepository repository;
 
     /**
      * Constructs a new GetUserByUserIdService with the specified repository.
@@ -28,6 +28,9 @@ public class GetUserByUserIdService {
      * @throws Exception If the user cannot be found or if there's an error during retrieval
      */
     public User getUserByUserId(String userId) throws Exception {
-        return this.repository.getUserByUserId(userId);
+        if (userId == null || userId.trim().isEmpty()) {
+            throw new IllegalArgumentException("userId cannot be null or empty");
+        }
+        return repository.getUserByUserId(userId);
     }
 }

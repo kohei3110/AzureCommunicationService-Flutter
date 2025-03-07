@@ -45,8 +45,20 @@ public class CreateUserService {
      * @throws Exception If the request body is invalid or if persistence fails
      */
     public User requestCosmosDBAsync(Optional<String> requestBody) throws Exception {
+        if (requestBody == null || !requestBody.isPresent()) {
+            throw new IllegalArgumentException("Request body cannot be null or empty");
+        }
+
         String body = requestBody.get();
+        if (body == null || body.trim().isEmpty()) {
+            throw new IllegalArgumentException("Request body content cannot be null or empty");
+        }
+
         User user = parseRequestBody(body);
+        if (user.getUserId() == null || user.getFamilyName() == null || user.getGivenName() == null) {
+            throw new IllegalArgumentException("Required fields (userId, familyName, givenName) cannot be null");
+        }
+
         return repository.createItemAsync(user);
     }
 
@@ -63,7 +75,7 @@ public class CreateUserService {
             return user;
         } catch (Exception e) {
             logger.warning(e.getMessage());
-            throw new Exception("Invalid parameters");
+            throw new IllegalArgumentException("Invalid request body format: " + e.getMessage());
         }
     }
 }
